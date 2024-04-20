@@ -1,6 +1,6 @@
-import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MapContainer from "./MapContainer";
+import "./App.css";
 
 function App() {
   const [place, setPlace] = useState("");
@@ -23,6 +23,19 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    // Add event listener to close the map on double-click
+    const handleDoubleClick = () => {
+      setCurrentLocation(null); // Close the map
+    };
+    document.body.addEventListener("dblclick", handleDoubleClick);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.body.removeEventListener("dblclick", handleDoubleClick);
+    };
+  }, []); // Empty dependency array ensures that the effect runs only once on mount
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
@@ -31,14 +44,36 @@ function App() {
       amount,
       contact
     );
-    
+
     const formData = {
       place,
       wasteFood,
       amount,
       contact
     };
-    return formData;
+    // Convert form data to JSON string
+    const jsonData = JSON.stringify(formData, null, 2);
+
+    // Save JSON data (client-side)
+    saveJSONToFile(jsonData, 'formData.json');
+    
+    fetch('formData.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Process the JSON data
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
+
+    // Reset form fields
+    handleReset();
 
     // Add your form submission logic here
   };
@@ -49,6 +84,19 @@ function App() {
     setWasteFood("");
     setAmount("");
     setContact("");
+  };
+
+  // Function to save JSON data to a file
+  const saveJSONToFile = (jsonData, filename) => {
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
