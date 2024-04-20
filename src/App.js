@@ -31,6 +31,15 @@ function App() {
       amount,
       contact
     );
+    
+    const formData = {
+      place,
+      wasteFood,
+      amount,
+      contact
+    };
+    return formData;
+
     // Add your form submission logic here
   };
 
@@ -62,7 +71,7 @@ function App() {
             placeholder="Enter Place"
             required
           />
-          <label htmlFor="wasteFood">Waste Food*</label>
+          <label htmlFor="wasteFood">Waste Food Name*</label>
           <input
             type="text"
             name="wasteFood"
