@@ -8,6 +8,7 @@ function App() {
   const [amount, setAmount] = useState("");
   const [contact, setContact] = useState("");
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [mapHTML, setMapHTML] = useState('');
 
   // Function to get the current location
   const getCurrentLocation = () => {
@@ -36,6 +37,14 @@ function App() {
     };
   }, []); // Empty dependency array ensures that the effect runs only once on mount
 
+  useEffect(() => {
+    // Fetch the HTML content of the Flask route '/'
+    fetch('http://localhost:5000/') // Update the URL if Flask is running on a different port or host
+      .then(response => response.text())
+      .then(html => setMapHTML(html))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
@@ -57,7 +66,7 @@ function App() {
     // Save JSON data (client-side)
     saveJSONToFile(jsonData, 'formData.json');
     
-    fetch('formData.json')
+    fetch('/formData.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -171,6 +180,9 @@ function App() {
           </button>
         </form>
       </fieldset>
+      <h1>Map from Flask:</h1>
+      <div dangerouslySetInnerHTML={{ __html: mapHTML }} />
+      <a href="http://127.0.0.1:5000//" target="_blank" rel="noopener noreferrer">Go to Flask URL</a>
     </div>
   );
 }
