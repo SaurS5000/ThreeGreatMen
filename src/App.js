@@ -101,7 +101,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Form in React</h1>
+      <h1>Food Waste Survey</h1>
       {currentLocation && <MapContainer currentLocation={currentLocation} />}
       <button onClick={getCurrentLocation}>Get Current Location</button>
       <a href={`https://www.google.com/maps/search/?api=1&query=${place}`} target="_blank" rel="noopener noreferrer">View Map</a>
