@@ -21,10 +21,11 @@ We basically collect the information of homes or hotels through a form in our we
 React JS for the web app & Flask for the geographic heat map API.
 
 ### How to configure
-Instructions for setting up project
+Install Folium & Flask libraries for the Python Flask API file. Install the respective dependencies in the React project. We can see the dependencies in package.json or package-lock.json.
 
 ### How to Run
-Instructions for running
+Run React using 'npm run start' & run Flask with the execute command.
 
 ### Other Links
+[Canva Presentation](https://www.canva.com/design/DAGDBzWTp0Q/Bk9FAav9aenc2CU4Ao6png/view?utm_content=DAGDBzWTp0Q&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 Provide any other links ( for eg. Wireframe , UI, Abstract, Presentation )
